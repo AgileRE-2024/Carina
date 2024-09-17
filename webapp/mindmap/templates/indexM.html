@@ -8,90 +8,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">  
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="{% static 'style/style_mindmap.css' %}">
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <title>Carina</title>
-    <style>
-        .poppins-extralight {
-        font-family: "Poppins", sans-serif;
-        font-weight: 200;
-        font-style: normal;
-    }
-    .mochiy-pop-one-regular {
-        font-family: "Mochiy Pop One", sans-serif;
-        font-weight: 400;
-        font-style: normal;
-    }
-        body {
-            font-family:"Mochiy Pop One", sans-serif;
-            text-align: center;
-            margin-top: 50px;
-            position: relative;
-            background-color: #f4f4f4;
-        }
-        h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            font-family: "Poppins", sans-serif;
-            font-weight: bold;
-        }
-        .search-container {
-            display: inline-block;
-        }
-        select, input[type="text"], button {
-            padding: 10px;
-            margin: 5px;
-            font-size: 16px;
-        }
-        select {
-            width: 100px;
-        }
-        input[type="text"] {
-            width: 300px;
-        }
-        button {
-            background-color: #2c3e50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #1a252f;
-        }
-        .mindmap-container {
-            width: 80%;
-            height: 500px;
-            margin: 50px auto;
-            border: 2px solid #2c3e50;
-            border-radius: 10px;
-            padding: 20px;
-            background-color: white;
-            font-family: "Mochiy Pop One", sans-serif;
-
-        }
-        .mindmap-header {
-            background-color: #2c3e50;
-            color: white;
-            padding: 10px;
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-            text-align: center;
-            font-size: 24px;
-            font-family: "Mochiy Pop One", sans-serif;
-        }
-        .icon-container {
-            position: absolute;
-            right: 20px; /* Posisi di pojok kanan */
-            top: 0;
-        }
-
-        .icon-container i {
-            font-size: 35px; 
-            color: black;
-        }
-    </style>
 </head>
 <body>
     <div class="icon-container">
