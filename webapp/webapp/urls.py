@@ -1,32 +1,16 @@
-"""
-URL configuration for webapp project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path
-from carina_search import views 
-from mindmap import views as mindmap
-from login import views as login
-from dsadmin import views as dsadmin
+
+# Mengimpor views dari berbagai aplikasi dan memberikan alias agar tidak terjadi konflik
+from carina_search import views as carina_search_views
+from mindmap import views as mindmap_views
+from login import views as login_views
+from dsadmin import views as dsadmin_views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', views.index, name='index'),  
-    path('mindmap/', mindmap.indexM, name='indexM'),
-    path('login/', login.indexL, name='indexL'),  
-    path('dsadmin/', dsadmin.indexA, name='indexA'),  
-
+    path('admin/', admin.site.urls),  # URL untuk admin Django
+    path('', carina_search_views.index, name='index'),  # URL untuk halaman utama
+    path('mindmap/', mindmap_views.indexM, name='indexM'),  # URL untuk halaman mindmap
+    path('login/', login_views.indexL, name='indexL'),  # URL untuk halaman login
+    path('dsadmin/', dsadmin_views.indexA, name='indexA'),  # URL untuk halaman admin khusus
 ]
-

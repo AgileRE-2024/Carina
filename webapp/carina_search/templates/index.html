@@ -1,7 +1,6 @@
 {% load static %}
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en">    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,37 +9,132 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
     <title>Carina</title>
-    
 </head>
+<style>
+    .poppins-extralight {
+    font-family: "Poppins", sans-serif;
+    font-weight: 200;
+    font-style: normal;
+}
+
+.mochiy-pop-one-regular {
+    font-family: "Mochiy Pop One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+body {
+    font-family: "Mochiy Pop One", sans-serif;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+/* Header container styles */
+.header-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px; /* Space between header and search */
+}
+
+/* H1 (Title) styles */
+h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    font-family: "Mochiy Pop One", sans-serif;
+    font-weight: bold;
+    text-align: center;
+}
+
+
+/* Search container styles */
+.search-container {
+    font-family: "Poppins", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    gap: 10px;
+}
+
+.search-container label {
+    font-family: "Poppins", sans-serif;
+}
+
+.search-container input::placeholder {
+    font-family: "Poppins", sans-serif;
+    color: #999; 
+}
+
+.search-container input[type="number"],
+.search-container input[type="text"],
+.search-container button {
+    padding: 10px;
+    margin: 5px;
+    font-size: 16px;
+    font-family: "Poppins", sans-serif;
+}
+
+input[type="number"] {
+    width: 80px;
+}
+
+input[type="text"] {
+    width: 250px;
+}
+
+.error-text {
+    font-family: "Poppins", sans-serif;
+    color: red;
+    font-size: 14px;
+    display: block;
+    margin-top: 10px;
+}
+
+.mindmap-text {
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    fill: black;
+}
+button.submit {
+    background-color: #2c3e50;
+    color: white; /* Agar teks terlihat jelas di atas latar belakang biru */
+}
+
+
+</style>
 <body>
 
+    {% if error %}
+    <p class="error-text">{{ error }}</p>
+    {% endif %}
 
     <div class="header-container">
         <h1>CARINA</h1> 
-        <div class="icon-container">
-            <a href="/login/">
-                <i class="fas fa-user"></i> 
-            </a>
-        </div>
     </div>
 
     <div class="search-container">
         <form action="/mindmap/" method="GET">
-            <select name="year">
-                <option value="all">All</option>
-                <option value="2023">2023</option>
-                <option value="2022">2022</option>
-                <option value="2021">2021</option>
-            </select>
-            <input type="text" name="query" placeholder="Search documents">
-            <button type="submit">SEARCH</button>
+            <label for="from-year">From Year:</label>
+            <input type="number" name="from_year" id="from-year" placeholder="All" value="{{ request.GET.from_year }}" min="1900" max="2100">
+    
+            <label for="to-year">To Year:</label>
+            <input type="number" name="to_year" id="to-year" placeholder="All" value="{{ request.GET.to_year }}" min="1900" max="2100">
+    
+            {% csrf_token %}
+            <input type="text" name="keyword" placeholder="Masukkan keyword pencarian..." value="{{ request.GET.keyword }}">
+            <button type="submit" class="submit">Cari</button>
+            {% if error %}
+            <p style="color: red;">{{ error }}</p>
+            {% endif %}
         </form>
     </div>
-
+    
 </body>
 </html>
