@@ -6,8 +6,9 @@ from datetime import datetime
 from django.conf import settings
 
 def indexM(request):
-    # Ambil keyword dan rentang tahun dari query parameter
+    # Ambil keyword, keyword method, dan rentang tahun dari query parameter
     keyword = request.GET.get('keyword', '').lower()
+    keyword_method = request.GET.get('keyword_method', '').lower()  # Filter khusus metode
     from_year = request.GET.get('from_year', '').strip()
     to_year = request.GET.get('to_year', '').strip()
 
@@ -36,26 +37,30 @@ def indexM(request):
                 title_lower = row['Title'].lower()
                 keyword_lower = keyword.lower()
 
-                # Coba parsing kolom 'Year' sebagai tanggal
+                # Parsing kolom 'Year' sebagai tahun
                 try:
                     journal_year = datetime.strptime(row['Year'], '%B %d, %Y').year
                 except ValueError:
                     continue
 
-                # Gabungkan kolom yang relevan menjadi satu "abstrak" gabungan
+                # Gabungkan kolom yang relevan menjadi satu "abstract" gabungan
                 abstract_combined = " ".join([
                     row.get('Background', ''), row.get('Objective', ''), 
                     row.get('Methods', ''), row.get('Results', ''), 
                     row.get('Conclusion', '')
                 ]).lower()
 
+                # Tambahan: Filter berdasarkan keyword method khusus di kolom 'Methods'
+                methods_content = row.get('Methods', '').lower()
+                if keyword_method and keyword_method not in methods_content:
+                    continue  # Lewati jurnal ini jika metode tidak cocok
+
                 # Filter berdasarkan keyword dan rentang tahun jika diisi
                 if keyword_lower in title_lower or keyword_lower in abstract_combined:
                     # Jika rentang tahun diisi, filter berdasarkan tahun
                     if (from_year is None or journal_year >= from_year) and (to_year is None or journal_year <= to_year):
                         relevansi = title_lower.count(keyword_lower) + abstract_combined.count(keyword_lower)
-                         # Ambil link atau PDF dari database
-                        pdf_link = row.get('PDF_Link', '')
+                        pdf_link = row.get('PDF Link', '')
 
                         if relevansi > 0:
                             journals.append({
@@ -64,10 +69,9 @@ def indexM(request):
                                     'abstract': abstract_combined,
                                     'author': row['Authors'],
                                     'relevansi': relevansi,
-                                    'pdf_link': row.get('PDF Link')  # Ambil link PDF
+                                    'pdf_link': pdf_link
                                 }
                             })
-
 
                             # Membuat relasi antar node berdasarkan relevansi lebih dari 1
                             if relevansi > 1:

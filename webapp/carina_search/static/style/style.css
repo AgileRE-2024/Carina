@@ -1,0 +1,220 @@
+/* Global Styles */
+:root {
+    --primary-color: #0B192C;
+    --secondary-color: #1E3E62;
+    --accent-color: #FF6500;
+    --text-color: #333;
+    --background-light: #FCFAEE;
+    --white: #FFFFFF;
+    --error-color: #dc3545;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient(135deg, var(--background-light) 0%, var(--white) 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+}
+
+/* Typography */
+.poppins-extralight {
+    font-family: "Poppins", sans-serif;
+    font-weight: 200;
+}
+
+.mochiy-pop-one-regular {
+    font-family: "Mochiy Pop One", sans-serif;
+    font-weight: 400;
+}
+
+/* Header Styles */
+.header-container {
+    text-align: center;
+    margin-bottom: 3rem;
+    width: 100%;
+}
+
+h1 {
+    font-family: "Mochiy Pop One", sans-serif;
+    font-size: 4rem;
+    color: var(--primary-color);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    letter-spacing: 2px;
+    animation: fadeIn 1s ease-in;
+}
+
+/* Search Container Styles */
+.search-container {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.search-container form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Input Styles */
+.search-container label {
+    font-weight: 500;
+    color: var(--text-color);
+    margin-right: 0.5rem;
+}
+
+.search-container input {
+    border: 2px solid #e1e1e1;
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.search-container input[type="number"] {
+    width: 100px;
+}
+
+.search-container input[type="text"] {
+    width: 250px;
+}
+
+.search-container input:focus {
+    border-color: var(--secondary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(30, 62, 98, 0.1);
+}
+
+.search-container input::placeholder {
+    color: #999;
+    font-size: 0.9rem;
+}
+
+/* Button Styles */
+.search-container button {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    padding: 0.8rem 2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.search-container button:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+/* Error Message Styles */
+.error-text {
+    color: var(--error-color);
+    font-size: 0.9rem;
+    text-align: center;
+    margin-top: 1rem;
+    width: 100%;
+}
+
+/* Mindmap Styles */
+.mindmap-container {
+    margin-top: 3rem;
+    width: 100%;
+    max-width: 1200px;
+    background: var(--white);
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.mindmap-header {
+    background: var(--primary-color);
+    color: var(--white);
+    padding: 1rem;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+#mindmap {
+    padding: 2rem;
+    min-height: 600px;
+}
+
+/* D3.js Mindmap Specific Styles */
+.nodes circle {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.nodes circle:hover {
+    fill: var(--accent-color);
+    transform: scale(1.1);
+}
+
+.links line {
+    stroke: #999;
+    stroke-opacity: 0.6;
+    stroke-width: 2;
+}
+
+.labels text {
+    font-family: "Poppins", sans-serif;
+    font-size: 12px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.labels text:hover {
+    fill: var(--accent-color);
+    font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 3rem;
+    }
+
+    .search-container {
+        padding: 1.5rem;
+    }
+
+    .search-container input[type="text"] {
+        width: 100%;
+    }
+
+    .search-container form {
+        flex-direction: column;
+    }
+
+    .search-container button {
+        width: 100%;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

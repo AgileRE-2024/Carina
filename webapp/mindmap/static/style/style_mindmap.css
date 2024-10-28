@@ -1,4 +1,16 @@
-    .poppins-extralight {
+/* Variables */
+:root {
+    --primary-dark: #0B192C;
+    --primary-blue: #1E3E62;
+    --accent-orange: #FF6500;
+    --light-bg: #FCFAEE;
+    --white: #FFFFFF;
+    --gray: #999999;
+    --error-red: #FF0000;
+}
+
+/* Font Families */
+.poppins-extralight {
     font-family: "Poppins", sans-serif;
     font-weight: 200;
     font-style: normal;
@@ -9,121 +21,237 @@
     font-weight: 400;
     font-style: normal;
 }
+
+/* Base Styles */
 body {
     font-family: "Mochiy Pop One", sans-serif;
-    margin-top: 50px;
+    margin: 0;
+    padding: 2rem;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    background: linear-gradient(135deg, var(--light-bg) 0%, var(--white) 100%);
 }
-/* Header container styles */
+
+/* Header Styles */
 .header-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
     width: 100%;
-    margin-bottom: 20px; /* Space between header and search */
-}
-
-/* H1 (Title) styles */
-h1 {
-    font-size: 48px;
-    margin-bottom: 20px;
-    font-family: "Mochiy Pop One", sans-serif;
-    font-weight: bold;
-    text-align: center;
-}
-
-
-/* Search container styles */
-.search-container {
-    font-family: "Poppins", sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 30px;
-    gap: 10px;
+    margin-bottom: 2rem;
+    animation: fadeInDown 0.8s ease-out;
 }
 
+h1 {
+    font-size: 3.5rem;
+    color: var(--primary-dark);
+    text-align: center;
+    margin: 0;
+    padding: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Search Container */
+.search-container {
+    width: 100%;
+    max-width: 900px;
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    animation: fadeIn 1s ease-out;
+}
+
+.search-container form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Form Elements */
 .search-container label {
     font-family: "Poppins", sans-serif;
+    color: var(--primary-dark);
+    font-weight: 500;
 }
 
-.search-container input::placeholder {
+.search-container input {
     font-family: "Poppins", sans-serif;
-    color: #999; 
+    padding: 0.8rem 1rem;
+    border: 2px solid #e1e1e1;
+    border-radius: 8px;
+    transition: all 0.3s ease;
 }
 
-.search-container input[type="number"],
-.search-container input[type="text"],
-.search-container button {
-    padding: 10px;
-    margin: 5px;
-    font-size: 16px;
-    font-family: "Poppins", sans-serif;
+.search-container input[type="number"] {
+    width: 100px;
 }
 
-input[type="number"] {
-    width: 80px;
-}
-
-input[type="text"] {
+.search-container input[type="text"] {
     width: 250px;
 }
 
+.search-container input:focus {
+    border-color: var(--primary-blue);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(30, 62, 98, 0.1);
+}
+
+.search-container input::placeholder {
+    color: var(--gray);
+}
+
+.search-container button {
+    background-color: var(--primary-dark);
+    color: var(--white);
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.search-container button:hover {
+    background-color: var(--primary-blue);
+    transform: translateY(-2px);
+}
+
+/* Error Message */
 .error-text {
     font-family: "Poppins", sans-serif;
-    color: red;
-    font-size: 14px;
-    display: block;
-    margin-top: 10px;
+    color: var(--error-red);
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.9rem;
 }
 
-.mindmap-text {
-    font-family: "Poppins", sans-serif;
-    font-size: 16px;
-    fill: black;
+/* Mindmap Container */
+.mindmap-container {
+    width: 100%;
+    max-width: 1200px;
+    background: var(--white);
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
+    overflow: hidden;
+    animation: fadeIn 1.2s ease-out;
 }
-button.submit {
-    background-color: #2c3e50;
-    color: white; /* Agar teks terlihat jelas di atas latar belakang biru */
+
+.mindmap-header {
+    background: var(--primary-dark);
+    color: var(--white);
+    padding: 1rem;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    border-radius: 15px 15px 0 0;
 }
 
-    .mindmap-text {
-        font-family: "Poppins", sans-serif;
-        font-size: 16px;
-        fill: #FF6500;
-    }
+#mindmap {
+    width: 100%;
+    height: 700px;
+    padding: 2rem;
+    background-color: var(--white);
+}
 
-    .mindmap-container #mindmap {
-        width: 1000px; 
-        height: auto;
-        padding: 90px;
-        background-color: white;
-        overflow: hidden; 
-    }
-
-    /* Hover effect for journal circles */
-    .nodes circle {
-    transition: transform 0.3s ease, fill 0.3s ease; /* Pastikan transisi diterapkan ke transform dan fill */
-    will-change: transform; /* Memberitahu browser bahwa transform akan sering berubah */
+/* D3.js Visualization Styles */
+.nodes circle {
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .nodes circle:hover {
-    fill: #FCFAEE; 
-    cursor: pointer;
-    transform: scale(1.1); /* Sedikit membesarkan lingkaran */
+    fill: var(--light-bg);
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.3));
+}
+
+.links line {
+    stroke: var(--gray);
+    stroke-opacity: 0.6;
+    stroke-width: 2;
 }
 
 .labels text {
-    transition: transform 0.3s ease, fill 0.3s ease; /* Transisi smooth */
-    will-change: transform; /* Optimasi untuk hover */
+    font-family: "Poppins", sans-serif;
+    font-size: 12px;
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .labels text:hover {
-    fill: #FCFAEE;
-    cursor: pointer;
-    transform: scale(1.1); /* Membesarkan teks */
+    fill: var(--accent-orange);
+    transform: scale(1.1);
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    .search-container {
+        padding: 1.5rem;
+    }
+
+    .search-container form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-container input[type="text"],
+    .search-container input[type="number"] {
+        width: 100%;
+    }
+
+    #mindmap {
+        height: 500px;
+        padding: 1rem;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .search-container {
+        display: none;
+    }
+
+    .mindmap-container {
+        box-shadow: none;
+    }
 }
