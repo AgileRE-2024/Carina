@@ -13,66 +13,18 @@
   <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&display=swap" rel="stylesheet" />
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <title>Carina</title>
-  <style>
-    /* Style variables */
-    :root { --primary-dark: #0b192c; --primary-blue: #1e3e62; --accent-orange: #ff6500; --light-bg: #fcfaee; --white: #ffffff; --gray: #999999; --error-red: #ff0000; }
-
-    /* Font Families */
-    .poppins-extralight { font-family: "Poppins", sans-serif; font-weight: 200; font-style: normal; }
-    .mochiy-pop-one-regular { font-family: "Mochiy Pop One", sans-serif; font-weight: 400; font-style: normal; }
-
-    /* Base Styles */
+<style>
     body {
-      font-family: "Mochiy Pop One", sans-serif; margin: 0; padding: 2rem; min-height: 100vh; display: flex; flex-direction: column; align-items: center;
-      background: linear-gradient(135deg, var(--light-bg) 0%, var(--white) 100%);
-    }
-
-    /* Header Styles */
-    .header-container {
-      width: 100%; display: flex; justify-content: center; align-items: center; margin-bottom: 2rem; animation: fadeInDown 0.8s ease-out;
-    }
-
-    h1 { font-size: 3.5rem; color: var(--primary-dark); text-align: center; margin: 0; padding: 1rem; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); }
-
-    /* Search Container */
-    .search-container {
-      width: 100%; max-width: 900px; background: var(--white); padding: 2rem; border-radius: 15px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); margin-bottom: 2rem; animation: fadeIn 1s ease-out;
-    }
-
-    .search-container form { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; align-items: center; }
-
-    /* Form Elements */
-    .search-container label { font-family: "Poppins", sans-serif; color: var(--primary-dark); font-weight: 500; }
-    .search-container input {
-      font-family: "Poppins", sans-serif; padding: 0.8rem 1rem; border: 2px solid #e1e1e1; border-radius: 8px; transition: all 0.3s ease;
-    }
-    .search-container input[type="number"] { width: 100px; }
-    .search-container input[type="text"] { width: 250px; }
-    .search-container input:focus { border-color: var(--primary-blue); outline: none; box-shadow: 0 0 0 3px rgba(30, 62, 98, 0.1); }
-    .search-container input::placeholder { color: var(--gray); }
-
-    .search-container button {
-      background-color: var(--primary-dark); color: var(--white); padding: 0.8rem 2rem; border: none; border-radius: 8px; font-family: "Poppins", sans-serif; font-weight: 600; cursor: pointer; transition: all 0.3s ease;
-    }
-    .search-container button:hover { background-color: var(--primary-blue); transform: translateY(-2px); }
-
-    .error-text {
-      font-family: "Poppins", sans-serif; color: var(--error-red); background-color: rgba(255, 0, 0, 0.1); border: 1px solid var(--error-red); padding: 0.8rem; border-radius: 8px; width: fit-content; margin: 1rem auto; font-size: 1rem;
-    }
-
-    /* Mindmap Container */
-    .mindmap-container {
-      width: 100%; max-width: 1200px; background: var(--white); border-radius: 15px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); margin-top: 2rem; overflow: hidden; animation: fadeIn 1.2s ease-out;
-    }
-
-    .mindmap-header { background: var(--primary-dark); color: var(--white); padding: 1rem; text-align: center; font-size: 1.5rem; font-weight: 600; border-radius: 15px 15px 0 0; }
-
-    #mindmap { width: 100%; height: 800px; padding: 2rem; background-color: var(--white); overflow: hidden; }
-
-    /* Additional styling */
-    /* ... */
-  </style>
-</head>
+        font-family: "Mochiy Pop One", sans-serif;
+        margin: 0;
+        padding: 2rem;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: linear-gradient(135deg, var(--light-bg) 0%, var(--white) 100%);
+      }
+</style>
 <body>
   <div class="header-container">
     <h1>CARINA</h1>
