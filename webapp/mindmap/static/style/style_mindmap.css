@@ -1,29 +1,352 @@
-/* Variables */
-:root {
-    --primary-dark: #0B192C;
-    --primary-blue: #1E3E62;
-    --accent-orange: #FF6500;
-    --light-bg: #FCFAEE;
-    --white: #FFFFFF;
-    --gray: #999999;
-    --error-red: #FF0000;
-}
+    /* Variables */
+    :root {
+        --primary-dark: #0b192c;
+        --primary-blue: #1e3e62;
+        --accent-orange: #ff6500;
+        --light-bg: #fcfaee;
+        --white: #ffffff;
+        --gray: #999999;
+        --error-red: #ff0000;
+    }
 
-/* Font Families */
-.poppins-extralight {
+    /* Font Families */
+    .poppins-extralight {
+        font-family: "Poppins", sans-serif;
+        font-weight: 200;
+        font-style: normal;
+    }
+
+    .mochiy-pop-one-regular {
+        font-family: "Mochiy Pop One", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    /* Base Styles */
+    body {
+        font-family: "Mochiy Pop One", sans-serif;
+        margin: 0;
+        padding: 2rem;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: linear-gradient(135deg,
+                var(--light-bg) 0%,
+                var(--white) 100%);
+    }
+
+    /* Header Styles */
+    .header-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 2rem;
+        animation: fadeInDown 0.8s ease-out;
+    }
+
+    h1 {
+        font-size: 3.5rem;
+        color: var(--primary-dark);
+        text-align: center;
+        margin: 0;
+        padding: 1rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Search Container */
+    .search-container {
+        width: 100%;
+        max-width: 900px;
+        background: var(--white);
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
+        animation: fadeIn 1s ease-out;
+    }
+
+    .search-container form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Form Elements */
+    .search-container label {
+        font-family: "Poppins", sans-serif;
+        color: var(--primary-dark);
+        font-weight: 500;
+    }
+
+    .search-container input {
+        font-family: "Poppins", sans-serif;
+        padding: 0.8rem 1rem;
+        border: 2px solid #e1e1e1;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .search-container input[type="number"] {
+        width: 100px;
+    }
+
+    .search-container input[type="text"] {
+        width: 250px;
+    }
+
+    .search-container input:focus {
+        border-color: var(--primary-blue);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(30, 62, 98, 0.1);
+    }
+
+    .search-container input::placeholder {
+        color: var(--gray);
+    }
+
+    .search-container button {
+        background-color: var(--primary-dark);
+        color: var(--white);
+        padding: 0.8rem 2rem;
+        border: none;
+        border-radius: 8px;
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .search-container button:hover {
+        background-color: var(--primary-blue);
+        transform: translateY(-2px);
+    }
+
+    .error-text {
+        font-family: "Poppins", sans-serif;
+        color: var(--error-red);
+        background-color: rgba(255,
+                0,
+                0,
+                0.1);
+        /* Tambahkan latar belakang transparan */
+        border: 1px solid var(--error-red);
+        /* Tambahkan border */
+        padding: 0.8rem;
+        border-radius: 8px;
+        width: fit-content;
+        margin: 1rem auto;
+        /* Centered */
+        font-size: 1rem;
+        /* Sedikit lebih besar agar lebih terlihat */
+    }
+
+    /* Mindmap Container */
+    .mindmap-container {
+        width: 100%;
+        max-width: 1200px;
+        background: var(--white);
+        border-radius: 15px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        margin-top: 2rem;
+        overflow: hidden;
+        animation: fadeIn 1.2s ease-out;
+    }
+
+    .mindmap-header {
+        background: var(--primary-dark);
+        color: var(--white);
+        padding: 1rem;
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: 600;
+        border-radius: 15px 15px 0 0;
+    }
+
+    #mindmap {
+        width: 100%;
+        height: auto;
+        /* Set height to auto */
+        padding: 2rem;
+        background-color: var(--white);
+        overflow: hidden;
+        /* Hide overflow */
+    }
+
+    /* D3.js Visualization Styles */
+    .nodes circle {
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .nodes circle:hover {
+        fill: var(--light-bg);
+        transform: scale(1.1);
+        filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.3));
+    }
+
+    .links line {
+        stroke: var(--gray);
+        stroke-opacity: 0.6;
+        stroke-width: 2;
+    }
+
+    .labels text {
+        font-family: "Poppins", sans-serif;
+        font-size: 12px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .labels text:hover {
+        fill: var(--accent-orange);
+        transform: scale(1.1);
+        text-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .tooltip {
+        position: absolute;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid #1e3e62;
+        border-radius: 8px;
+        pointer-events: none;
+        font-family: "Poppins", sans-serif;
+        font-size: 0.9rem;
+        max-width: 300px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        transition: all 0.2s ease;
+        opacity: 0;
+    }
+
+    .tooltip-title {
+        font-weight: 600;
+        color: #0b192c;
+        margin-bottom: 0.5rem;
+        border-bottom: 2px solid #ff6500;
+        padding-bottom: 0.3rem;
+    }
+
+    .tooltip-content {
+        color: #666;
+        line-height: 1.4;
+    }
+
+    .tooltip-author {
+        color: #1e3e62;
+        font-style: italic;
+        margin-top: 0.5rem;
+        font-size: 0.85rem;
+    }
+
+    /* Enhanced Node Hover Effects */
+    .nodes circle {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        stroke: transparent;
+        stroke-width: 2px;
+    }
+
+    .nodes circle:hover {
+        stroke: #ff6500;
+        filter: drop-shadow(0 0 8px rgba(255, 101, 0, 0.4));
+        transform: scale(1.15);
+    }
+
+    /* Enhanced Link Hover Effects */
+    .links line {
+        stroke: #999;
+        stroke-opacity: 0.6;
+        stroke-width: 2;
+        transition: all 0.3s ease;
+    }
+
+    .links line.highlighted {
+        stroke: #ff6500;
+        stroke-opacity: 1;
+        stroke-width: 3;
+        filter: drop-shadow(0 0 3px rgba(255, 101, 0, 0.4));
+    }
+
+    /* Enhanced Label Hover Effects */
+    .labels text {
+        font-family: "Poppins", sans-serif;
+        font-size: 12px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        font-weight: 500;
+    }
+
+    .labels text:hover {
+        fill: #ff6500;
+        font-weight: 600;
+        filter: drop-shadow(0 0 2px rgba(255, 101, 0, 0.2));
+    }
+
+    .node-group {
+        transition: all 0.3s ease;
+    }
+
+    /* Warna teks untuk lingkaran yang diinput oleh pengguna (keyword) */
+    .node-label.keyword {
+        fill: #ff6500 !important;
+        /* Warna oranye untuk keyword */
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    /* Warna teks untuk lingkaran judul jurnal lainnya */
+    .node-label.title {
+        fill: #3a6d8c !important;
+        /* Warna hitam untuk judul jurnal lainnya */
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .node-group:hover .node-circle {
+        stroke: #ff6500;
+        stroke-width: 2px;
+    }
+
+    .node-group.highlighted .node-circle {
+        stroke: #ff6500;
+        stroke-width: 2px;
+        filter: drop-shadow(0 0 8px rgba(255, 101, 0, 0.4));
+    }
+
+    .node-group.dimmed {
+        opacity: 0.4;
+    }
+   /* Style Variables */
+:root {
+    --primary-dark: #0b192c;
+    --primary-blue: #1e3e62;
+    --accent-orange: #ff6500;
+    --light-bg: #fcfaee;
+    --white: #ffffff;
+    --gray: #999999;
+    --error-red: #ff0000;
+  }
+  
+  /* Font Families */
+  .poppins-extralight {
     font-family: "Poppins", sans-serif;
     font-weight: 200;
     font-style: normal;
-}
-
-.mochiy-pop-one-regular {
+  }
+  
+  .mochiy-pop-one-regular {
     font-family: "Mochiy Pop One", sans-serif;
     font-weight: 400;
     font-style: normal;
-}
-
-/* Base Styles */
-body {
+  }
+  
+  /* Base Styles */
+  body {
     font-family: "Mochiy Pop One", sans-serif;
     margin: 0;
     padding: 2rem;
@@ -32,29 +355,29 @@ body {
     flex-direction: column;
     align-items: center;
     background: linear-gradient(135deg, var(--light-bg) 0%, var(--white) 100%);
-}
-
-/* Header Styles */
-.header-container {
+  }
+  
+  /* Header Styles */
+  .header-container {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: 2rem;
     animation: fadeInDown 0.8s ease-out;
-}
-
-h1 {
+  }
+  
+  h1 {
     font-size: 3.5rem;
     color: var(--primary-dark);
     text-align: center;
     margin: 0;
     padding: 1rem;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Search Container */
-.search-container {
+  }
+  
+  /* Search Container */
+  .search-container {
     width: 100%;
     max-width: 900px;
     background: var(--white);
@@ -63,50 +386,50 @@ h1 {
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
     margin-bottom: 2rem;
     animation: fadeIn 1s ease-out;
-}
-
-.search-container form {
+  }
+  
+  .search-container form {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
     justify-content: center;
     align-items: center;
-}
-
-/* Form Elements */
-.search-container label {
+  }
+  
+  /* Form Elements */
+  .search-container label {
     font-family: "Poppins", sans-serif;
     color: var(--primary-dark);
     font-weight: 500;
-}
-
-.search-container input {
+  }
+  
+  .search-container input {
     font-family: "Poppins", sans-serif;
     padding: 0.8rem 1rem;
     border: 2px solid #e1e1e1;
     border-radius: 8px;
     transition: all 0.3s ease;
-}
-
-.search-container input[type="number"] {
+  }
+  
+  .search-container input[type="number"] {
     width: 100px;
-}
-
-.search-container input[type="text"] {
+  }
+  
+  .search-container input[type="text"] {
     width: 250px;
-}
-
-.search-container input:focus {
+  }
+  
+  .search-container input:focus {
     border-color: var(--primary-blue);
     outline: none;
     box-shadow: 0 0 0 3px rgba(30, 62, 98, 0.1);
-}
-
-.search-container input::placeholder {
+  }
+  
+  .search-container input::placeholder {
     color: var(--gray);
-}
-
-.search-container button {
+  }
+  
+  .search-container button {
     background-color: var(--primary-dark);
     color: var(--white);
     padding: 0.8rem 2rem;
@@ -116,24 +439,27 @@ h1 {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-}
-
-.search-container button:hover {
+  }
+  
+  .search-container button:hover {
     background-color: var(--primary-blue);
     transform: translateY(-2px);
-}
-
-/* Error Message */
-.error-text {
+  }
+  
+  .error-text {
     font-family: "Poppins", sans-serif;
     color: var(--error-red);
-    text-align: center;
-    margin-top: 1rem;
-    font-size: 0.9rem;
-}
-
-/* Mindmap Container */
-.mindmap-container {
+    background-color: rgba(255, 0, 0, 0.1);
+    border: 1px solid var(--error-red);
+    padding: 0.8rem;
+    border-radius: 8px;
+    width: fit-content;
+    margin: 1rem auto;
+    font-size: 1rem;
+  }
+  
+  /* Mindmap Container */
+  .mindmap-container {
     width: 100%;
     max-width: 1200px;
     background: var(--white);
@@ -142,9 +468,9 @@ h1 {
     margin-top: 2rem;
     overflow: hidden;
     animation: fadeIn 1.2s ease-out;
-}
-
-.mindmap-header {
+  }
+  
+  .mindmap-header {
     background: var(--primary-dark);
     color: var(--white);
     padding: 1rem;
@@ -152,106 +478,106 @@ h1 {
     font-size: 1.5rem;
     font-weight: 600;
     border-radius: 15px 15px 0 0;
-}
-
-#mindmap {
+  }
+  
+  #mindmap {
     width: 100%;
-    height: 700px;
+    height: 800px;
     padding: 2rem;
     background-color: var(--white);
-}
-
-/* D3.js Visualization Styles */
-.nodes circle {
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-.nodes circle:hover {
-    fill: var(--light-bg);
-    transform: scale(1.1);
-    filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.3));
-}
-
-.links line {
-    stroke: var(--gray);
-    stroke-opacity: 0.6;
-    stroke-width: 2;
-}
-
-.labels text {
-    font-family: "Poppins", sans-serif;
-    font-size: 12px;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-.labels text:hover {
-    fill: var(--accent-orange);
-    transform: scale(1.1);
-    text-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
-}
-
-/* Animations */
-@keyframes fadeIn {
+    overflow: hidden;
+  }
+  
+  /* Animations */
+  @keyframes fadeIn {
     from {
-        opacity: 0;
-        transform: translateY(20px);
+      opacity: 0;
+      transform: translateY(20px);
     }
     to {
-        opacity: 1;
-        transform: translateY(0);
+      opacity: 1;
+      transform: translateY(0);
     }
-}
-
-@keyframes fadeInDown {
+  }
+  
+  @keyframes fadeInDown {
     from {
-        opacity: 0;
-        transform: translateY(-20px);
+      opacity: 0;
+      transform: translateY(-20px);
     }
     to {
-        opacity: 1;
-        transform: translateY(0);
+      opacity: 1;
+      transform: translateY(0);
     }
-}
+  }
+  
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    body {
-        padding: 1rem;
-    }
+    /* Animations */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
 
-    h1 {
-        font-size: 2.5rem;
-    }
-
-    .search-container {
-        padding: 1.5rem;
-    }
-
-    .search-container form {
-        flex-direction: column;
-        align-items: stretch;
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
-    .search-container input[type="text"],
-    .search-container input[type="number"] {
-        width: 100%;
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
-    #mindmap {
-        height: 500px;
-        padding: 1rem;
-    }
-}
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        body {
+            padding: 1rem;
+        }
 
-/* Print Styles */
-@media print {
-    .search-container {
-        display: none;
+        h1 {
+            font-size: 2.5rem;
+        }
+
+        .search-container {
+            padding: 1.5rem;
+        }
+
+        .search-container form {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .search-container input[type="text"],
+        .search-container input[type="number"] {
+            width: 100%;
+        }
+
+        #mindmap {
+            width: 100%;
+            height: 100vh;
+            /* Mengatur tinggi menjadi 100% dari viewport */
+            padding: 2rem;
+            background-color: var(--white);
+        }
     }
 
-    .mindmap-container {
-        box-shadow: none;
+    /* Print Styles */
+    @media print {
+        .search-container {
+            display: none;
+        }
+
+        .mindmap-container {
+            box-shadow: none;
+        }
     }
-}
+

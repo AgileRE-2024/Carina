@@ -2,435 +2,425 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'style/style_mindmap.css' %}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&display=swap" rel="stylesheet">
-    <script src="https://d3js.org/d3.v7.min.js"></script>
-    <title>Carina</title>
-</head>
-<style>
-    /* Variables */
-:root {
-    --primary-dark: #0B192C;
-    --primary-blue: #1E3E62;
-    --accent-orange: #FF6500;
-    --light-bg: #FCFAEE;
-    --white: #FFFFFF;
-    --gray: #999999;
-    --error-red: #FF0000;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{% static 'style/style_mindmap.css' %}" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&display=swap" rel="stylesheet" />
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <title>Carina</title>
+  <style>
+    /* Style variables */
+    :root { --primary-dark: #0b192c; --primary-blue: #1e3e62; --accent-orange: #ff6500; --light-bg: #fcfaee; --white: #ffffff; --gray: #999999; --error-red: #ff0000; }
 
-/* Font Families */
-.poppins-extralight {
-    font-family: "Poppins", sans-serif;
-    font-weight: 200;
-    font-style: normal;
-}
+    /* Font Families */
+    .poppins-extralight { font-family: "Poppins", sans-serif; font-weight: 200; font-style: normal; }
+    .mochiy-pop-one-regular { font-family: "Mochiy Pop One", sans-serif; font-weight: 400; font-style: normal; }
 
-.mochiy-pop-one-regular {
-    font-family: "Mochiy Pop One", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-}
-
-/* Base Styles */
-body {
-    font-family: "Mochiy Pop One", sans-serif;
-    margin: 0;
-    padding: 2rem;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: linear-gradient(135deg, var(--light-bg) 0%, var(--white) 100%);
-}
-
-/* Header Styles */
-.header-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 2rem;
-    animation: fadeInDown 0.8s ease-out;
-}
-
-h1 {
-    font-size: 3.5rem;
-    color: var(--primary-dark);
-    text-align: center;
-    margin: 0;
-    padding: 1rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Search Container */
-.search-container {
-    width: 100%;
-    max-width: 900px;
-    background: var(--white);
-    padding: 2rem;
-    border-radius: 15px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-    margin-bottom: 2rem;
-    animation: fadeIn 1s ease-out;
-}
-
-.search-container form {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
-    align-items: center;
-}
-
-/* Form Elements */
-.search-container label {
-    font-family: "Poppins", sans-serif;
-    color: var(--primary-dark);
-    font-weight: 500;
-}
-
-.search-container input {
-    font-family: "Poppins", sans-serif;
-    padding: 0.8rem 1rem;
-    border: 2px solid #e1e1e1;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-}
-
-.search-container input[type="number"] {
-    width: 100px;
-}
-
-.search-container input[type="text"] {
-    width: 250px;
-}
-
-.search-container input:focus {
-    border-color: var(--primary-blue);
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(30, 62, 98, 0.1);
-}
-
-.search-container input::placeholder {
-    color: var(--gray);
-}
-
-.search-container button {
-    background-color: var(--primary-dark);
-    color: var(--white);
-    padding: 0.8rem 2rem;
-    border: none;
-    border-radius: 8px;
-    font-family: "Poppins", sans-serif;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.search-container button:hover {
-    background-color: var(--primary-blue);
-    transform: translateY(-2px);
-}
-
-/* Error Message */
-.error-text {
-    font-family: "Poppins", sans-serif;
-    color: var(--error-red);
-    text-align: center;
-    margin-top: 1rem;
-    font-size: 0.9rem;
-}
-
-/* Mindmap Container */
-.mindmap-container {
-    width: 100%;
-    max-width: 1200px;
-    background: var(--white);
-    border-radius: 15px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-    margin-top: 2rem;
-    overflow: hidden;
-    animation: fadeIn 1.2s ease-out;
-}
-
-.mindmap-header {
-    background: var(--primary-dark);
-    color: var(--white);
-    padding: 1rem;
-    text-align: center;
-    font-size: 1.5rem;
-    font-weight: 600;
-    border-radius: 15px 15px 0 0;
-}
-
-#mindmap {
-    width: 100%;
-    height: 700px;
-    padding: 2rem;
-    background-color: var(--white);
-}
-
-/* D3.js Visualization Styles */
-.nodes circle {
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-.nodes circle:hover {
-    fill: var(--light-bg);
-    transform: scale(1.1);
-    filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.3));
-}
-
-.links line {
-    stroke: var(--gray);
-    stroke-opacity: 0.6;
-    stroke-width: 2;
-}
-
-.labels text {
-    font-family: "Poppins", sans-serif;
-    font-size: 12px;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-.labels text:hover {
-    fill: var(--accent-orange);
-    transform: scale(1.1);
-    text-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
-}
-
-/* Animations */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
+    /* Base Styles */
     body {
-        padding: 1rem;
+      font-family: "Mochiy Pop One", sans-serif; margin: 0; padding: 2rem; min-height: 100vh; display: flex; flex-direction: column; align-items: center;
+      background: linear-gradient(135deg, var(--light-bg) 0%, var(--white) 100%);
     }
 
-    h1 {
-        font-size: 2.5rem;
+    /* Header Styles */
+    .header-container {
+      width: 100%; display: flex; justify-content: center; align-items: center; margin-bottom: 2rem; animation: fadeInDown 0.8s ease-out;
     }
 
+    h1 { font-size: 3.5rem; color: var(--primary-dark); text-align: center; margin: 0; padding: 1rem; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); }
+
+    /* Search Container */
     .search-container {
-        padding: 1.5rem;
+      width: 100%; max-width: 900px; background: var(--white); padding: 2rem; border-radius: 15px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); margin-bottom: 2rem; animation: fadeIn 1s ease-out;
     }
 
-    .search-container form {
-        flex-direction: column;
-        align-items: stretch;
+    .search-container form { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; align-items: center; }
+
+    /* Form Elements */
+    .search-container label { font-family: "Poppins", sans-serif; color: var(--primary-dark); font-weight: 500; }
+    .search-container input {
+      font-family: "Poppins", sans-serif; padding: 0.8rem 1rem; border: 2px solid #e1e1e1; border-radius: 8px; transition: all 0.3s ease;
+    }
+    .search-container input[type="number"] { width: 100px; }
+    .search-container input[type="text"] { width: 250px; }
+    .search-container input:focus { border-color: var(--primary-blue); outline: none; box-shadow: 0 0 0 3px rgba(30, 62, 98, 0.1); }
+    .search-container input::placeholder { color: var(--gray); }
+
+    .search-container button {
+      background-color: var(--primary-dark); color: var(--white); padding: 0.8rem 2rem; border: none; border-radius: 8px; font-family: "Poppins", sans-serif; font-weight: 600; cursor: pointer; transition: all 0.3s ease;
+    }
+    .search-container button:hover { background-color: var(--primary-blue); transform: translateY(-2px); }
+
+    .error-text {
+      font-family: "Poppins", sans-serif; color: var(--error-red); background-color: rgba(255, 0, 0, 0.1); border: 1px solid var(--error-red); padding: 0.8rem; border-radius: 8px; width: fit-content; margin: 1rem auto; font-size: 1rem;
     }
 
-    .search-container input[type="text"],
-    .search-container input[type="number"] {
-        width: 100%;
-    }
-
-    #mindmap {
-        height: 500px;
-        padding: 1rem;
-    }
-}
-
-/* Print Styles */
-@media print {
-    .search-container {
-        display: none;
-    }
-
+    /* Mindmap Container */
     .mindmap-container {
-        box-shadow: none;
+      width: 100%; max-width: 1200px; background: var(--white); border-radius: 15px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); margin-top: 2rem; overflow: hidden; animation: fadeIn 1.2s ease-out;
     }
-}
-</style>
+
+    .mindmap-header { background: var(--primary-dark); color: var(--white); padding: 1rem; text-align: center; font-size: 1.5rem; font-weight: 600; border-radius: 15px 15px 0 0; }
+
+    #mindmap { width: 100%; height: 800px; padding: 2rem; background-color: var(--white); overflow: hidden; }
+
+    /* Additional styling */
+    /* ... */
+  </style>
+</head>
 <body>
-    <div class="header-container">
-        <h1>CARINA</h1>
+  <div class="header-container">
+    <h1>CARINA</h1>
+  </div>
+
+  <div class="search-container">
+    <form action="/mindmap/" method="GET">
+      <label for="from-year">From Year:</label>
+      <input type="number" name="from_year" id="from-year" placeholder="All" value="{{ request.GET.from_year }}" min="1900" max="2100" />
+      <label for="to-year">To Year:</label>
+      <input type="number" name="to_year" id="to-year" placeholder="All" value="{{ request.GET.to_year }}" min="1900" max="2100" />
+
+      {% csrf_token %}
+      <input type="text" name="keyword" placeholder="Masukkan keyword pencarian..." value="{{ request.GET.keyword }}" />
+      <input type="text" name="keyword_method" placeholder="Masukkan metode" value="{{ request.GET.keyword_method }}" />
+      <input type="text" name="keyword_objective" placeholder="Masukkan objective" value="{{ request.GET.keyword_objective }}" />
+      
+      <button type="submit">Cari</button>
+      {% if error %} <p class="error-text">{{ error }}</p> {% endif %}
+    </form>
+  </div>
+
+  <div class="checkbox-container" style="display: flex; gap: 1rem; margin-top: 1rem; justify-content: center;">
+    <div style="display: flex; align-items: center; gap: 0.5rem;">
+      <input type="checkbox" id="show-keyword" name="show_keyword" checked />
+      <label for="show-keyword">Show Keyword Nodes</label>
     </div>
-
-    <div class="search-container">
-        <form action="/mindmap/" method="GET">
-            <label for="from-year">From Year:</label>
-            <input type="number" name="from_year" id="from-year" placeholder="All" value="{{ request.GET.from_year }}" min="1900" max="2100">
-
-            <label for="to-year">To Year:</label>
-            <input type="number" name="to_year" id="to-year" placeholder="All" value="{{ request.GET.to_year }}" min="1900" max="2100">
-
-            {% csrf_token %}
-            <input type="text" name="keyword" placeholder="Masukkan keyword pencarian..." value="{{ request.GET.keyword }}">
-            <input type="text" name="keyword_method" placeholder="Masukkan metode" value="{{ request.GET.keyword_method }}">
-
-            <button type="submit">Cari</button>
-        </form>
-
-        {% if error %}
-            <p class="error-text">{{ error }}</p>
-        {% endif %}
+    <div style="display: flex; align-items: center; gap: 0.5rem;">
+      <input type="checkbox" id="show-method" name="show_method" checked />
+      <label for="show-method">Show Method Nodes</label>
     </div>
-
-    <div class="mindmap-container">
-        <div class="mindmap-header">MIND MAP</div>
-        <div id="mindmap"></div>
+    <div style="display: flex; align-items: center; gap: 0.5rem;">
+      <input type="checkbox" id="show-goal" name="show_goal" checked />
+      <label for="show-goal">Show Goal Nodes</label>
     </div>
+  </div>
 
-    <!-- Menyimpan data JSON di elemen script -->
-    <script type="application/json" id="journals-data">
-        {{ journals|safe }}
-    </script>
-    <script type="application/json" id="links-data">
-        {{ links|safe }}
-    </script>
+  <div class="mindmap-container">
+    <div class="mindmap-header">MIND MAP</div>
+    <div id="mindmap"></div>
+  </div>
+
+  <script type="application/json" id="journals-data">{{ journals|safe }}</script>
+  <script type="application/json" id="links-data">{{ links|safe }}</script>
 
     <!-- Menampilkan Mindmap dengan D3.js -->
-    <script>
-        var data = JSON.parse(document.getElementById('journals-data').textContent);
-        var links = JSON.parse(document.getElementById('links-data').textContent);
-        var keyword = "{{ request.GET.keyword }}";
-    
-        var width = 800, height = 600;
-        
-        var svg = d3.select("#mindmap")
-            .append("svg")
-            .attr("width", width)
-            .attr("height", height);
-    
-        var simulation = d3.forceSimulation()
-            .force("link", d3.forceLink().id(function(d) { return d.id; }).distance(150))
-            .force("charge", d3.forceManyBody().strength(-200))
-            .force("center", d3.forceCenter(width / 2, height / 2));
-    
-        // Buat nodes berdasarkan data relevansi
-        var nodes = data.map(function(journal, i) {
-            return {
-                id: journal.j.title,
-                group: i,
-                abstract: journal.j.abstract,
-                author: journal.j.author,
-                relevansi: journal.j.relevansi,
-                pdf_link: journal.j.pdf_link // Ambil link PDF atau URL dari data
-            };
-        });
-    
-        // Tambahkan node untuk keyword di tengah
-        var keywordNode = {
-            id: keyword,
-            group: nodes.length,
-            abstract: "Keyword: " + keyword,
-            author: "User",
-            relevansi: 15,
-            fx: width / 2,
-            fy: height / 3
-        };
-        nodes.push(keywordNode);
-    
-        // Buat link dari keyword ke node jurnal dengan relevansi > 1
-        links.push(...nodes.map(function(node) {
-            if (node.relevansi > 1 && node.id !== keywordNode.id) {
-                return {
-                    source: keywordNode.id,
-                    target: node.id
-                };
-            }
-        }).filter(Boolean));
-    
-        // Menggambar link antar node
-        var link = svg.append("g")
-            .attr("class", "links")
-            .selectAll("line")
-            .data(links)
-            .enter()
-            .append("line")
-            .attr("stroke-width", 1)
-            .attr("stroke", "#999");
-    
-        // Buat lingkaran dengan ukuran berdasarkan relevansi
-        var node = svg.append("g")
-            .attr("class", "nodes")
-            .selectAll("circle")
-            .data(nodes)
-            .enter()
-            .append("circle")
-            .attr("r", function(d) { return d.id === keyword ? 50 : d.relevansi * 5; })
-            .attr("fill", function(d) { return d.id === keyword ? "#0B192C" : "#1E3E62"; })
-            .on("click", function(event, d) {
-                if (d.pdf_link) {
-                    window.open(d.pdf_link, '_blank');  // Buka link PDF atau URL di tab baru
-                } else {
-                    alert("Tidak ada link tersedia untuk jurnal ini.");
-                }
-            });
-    
-        // Buat label untuk setiap node
-        var labels = svg.append("g")
-            .attr("class", "labels")
-            .selectAll("text")
-            .data(nodes)
-            .enter()
-            .append("text")
-            .attr("text-anchor", "middle")
-            .attr("dy", ".35em")
-            .attr("fill", function(d) { return d.id === keyword ? "white" : "#FF6500"; })
-            .text(function(d) { return d.id; })
-            .on("click", function(event, d) {
-                if (d.pdf_link) {
-                    window.open(d.pdf_link, '_blank');  // Buka link PDF atau URL di tab baru
-                } else {
-                    alert("Tidak ada link tersedia untuk jurnal ini.");
-                }
-            });
-    
-        simulation
-            .nodes(nodes)
-            .on("tick", ticked);
-    
-        simulation.force("link")
-            .links(links);
-    
-        function ticked() {
-            link
-                .attr("x1", function(d) { return d.source.x; })
-                .attr("y1", function(d) { return d.source.y; })
-                .attr("x2", function(d) { return d.target.x; })
-                .attr("y2", function(d) { return d.target.y; });
-    
-            node
-                .attr("cx", function(d) { return d.x; })
-                .attr("cy", function(d) { return d.y; });
-    
-            labels
-                .attr("x", function(d) { return d.x; })
-                .attr("y", function(d) { return d.y; });
-        }
+<!-- Menampilkan Mindmap dengan D3.js -->
+<script>
+  // Get initial data from elements
+  var data = JSON.parse(document.getElementById("journals-data").textContent);
+  var links = JSON.parse(document.getElementById("links-data").textContent);
+  var keyword = "{{ request.GET.keyword }}";
+
+  // Set larger dimensions for the visualization
+  var width = 1200,
+      height = 800;
+
+  // Create tooltip div
+  var tooltip = d3.select("body")
+      .append("div")
+      .attr("class", "tooltip")
+      .style("opacity", 0);
+
+  var svg = d3.select("#mindmap")
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .attr("viewBox", [0, 0, width, height]);
+
+  // Update force simulation with larger distances and stronger forces
+  var simulation = d3.forceSimulation()
+      .force("link", d3.forceLink()
+          .id(d => d.id)
+          .distance(150))
+      .force("charge", d3.forceManyBody().strength(-400))
+      .force("center", d3.forceCenter(width / 2, height / 2))
+      .force("collision", d3.forceCollide().radius(60));
+
+  // Create nodes with the same structure
+  var nodes = data.map((journal, i) => ({
+      id: journal.j.title,
+      group: i,
+      abstract: journal.j.abstract,
+      author: journal.j.author,
+      relevansi: journal.j.relevansi,
+      pdf_link: journal.j.pdf_link,
+      subNodes: [
+          { id: `${journal.j.title}_goal`, label: "Goal", content: journal.j.goal, type: "goal" },
+          { id: `${journal.j.title}_method`, label: "Method", content: journal.j.method, type: "method" },
+          { id: `${journal.j.title}_keyword`, label: "Keyword", content: keyword, type: "keyword" },
+      ],
+  }));
+
+  // Add sub-nodes to nodes array
+  nodes.forEach(node => {
+      node.subNodes.forEach(subNode => {
+          nodes.push({
+              id: subNode.id,
+              label: subNode.label,
+              content: subNode.content,
+              type: subNode.type,
+              parent: node.id,
+          });
+
+          links.push({ source: node.id, target: subNode.id });
+      });
+  });
+
+  // Add keyword node
+  var keywordNode = {
+      id: keyword,
+      group: nodes.length,
+      abstract: "Keyword: " + keyword,
+      author: "User",
+      relevansi: 15,
+      fx: width / 2,
+      fy: height / 3,
+  };
+  nodes.push(keywordNode);
+
+  // Create links from keyword to other nodes
+  links.push(...nodes
+      .map(node => (node.relevansi > 1 && node.id !== keywordNode.id)
+          ? { source: keywordNode.id, target: node.id } : null)
+      .filter(Boolean));
+
+  // Create link elements
+  var link = svg.append("g")
+      .attr("class", "links")
+      .selectAll("line")
+      .data(links)
+      .enter()
+      .append("line")
+      .attr("data-type", d => d.type || 'default')
+      .attr("stroke-width", d => d.type ? 2 : 1);
+
+  // Create node groups with improved text wrapping
+  var nodeGroup = svg.append("g")
+      .attr("class", "nodes")
+      .selectAll(".node-group")
+      .data(nodes)
+      .enter()
+      .append("g")
+      .attr("class", "node-group")
+      .attr("transform", d => `translate(${d.x}, ${d.y})`)
+      .on("mouseover", handleMouseOver)
+      .on("mouseout", handleMouseOut)
+      .on("click", handleClick);
+
+  // Add circles to nodes
+  nodeGroup.append("circle")
+      .attr("class", "node-circle")
+      .attr("r", d => (!d.id.includes("_") ? 40 : 20))
+      .attr("fill", d => {
+          if (d.id === keyword) return "#0B192C";
+          if (d.type === "goal") return "#FF6500";
+          if (d.type === "method") return "#1E3E62";
+          if (d.type === "keyword") return "#999";
+          return "#F2E5BF";
+      });
+
+  // Add wrapped text only to main nodes
+  nodeGroup.each(function(d) {
+      if (!d.id.includes("_") || d.id === keyword) {
+          var nodeGroup = d3.select(this);
+          var title = d.id;
+          var networkIndex = title.indexOf("Network");
+          if (networkIndex !== -1) {
+              title = title.substring(0, networkIndex + "Network".length);
+          }
+
+          var words = title.split(/\s+/);
+          var text = nodeGroup.append("text")
+              .attr("class", d.id === keyword ? "node-label keyword" : "node-label title")
+              .attr("text-anchor", "middle")
+              .attr("dy", ".35em");
+
+          var fontSize = Math.min(12, 80 / Math.max(...words.map(w => w.length)));
+          text.style("font-size", fontSize + "px");
+
+          if (words.length > 1) {
+              var circleRadius = !d.id.includes("_") ? 40 : 20;
+              var maxWidth = circleRadius * 1.8;
+              var lineHeight = fontSize * 1.2;
+              var maxLines = Math.floor((circleRadius * 1.8) / lineHeight);
+              var lines = [];
+              var line = [];
+              var tspan = text.append("tspan")
+                  .attr("x", 0)
+                  .attr("dy", (-lineHeight * (Math.min(words.length, maxLines) - 1) / 2) + "px");
+
+              words.forEach(word => {
+                  var testLine = line.concat([word]);
+                  if (testLine.join(" ").length * fontSize > 70) {
+                      if (lines.length < maxLines - 1) {
+                          lines.push(line);
+                          line = [word];
+                      } else {
+                          line.push("...");
+                          lines.push(line);
+                          return;
+                      }
+                  } else {
+                      line = testLine;
+                  }
+              });
+              if (line.length > 0 && lines.length < maxLines) {
+                  lines.push(line);
+              }
+
+              lines.forEach((line, i) => {
+                  tspan = text.append("tspan")
+                      .attr("x", 0)
+                      .attr("dy", i === 0 ? "0" : lineHeight + "px")
+                      .text(line.join(" "));
+              });
+          } else {
+              text.text(d.id);
+          }
+      }
+  });
+
+  // Event handlers
+  function handleMouseOver(event, d) {
+      highlightConnections(d);
+      tooltip.transition().duration(200).style("opacity", 1);
+      tooltip
+          .html(
+              `<div class="tooltip-title">${d.id.includes("_") ? d.label : d.id}</div>
+              <div class="tooltip-content">${d.content ? d.content.substring(0, 150) + "..." : ""}</div>
+              ${d.author && !d.id.includes("_") ? `<div class="tooltip-author">By: ${d.author}</div>` : ""}`
+          )
+          .style("left", event.pageX + 10 + "px")
+          .style("top", event.pageY - 10 + "px");
+  }
+
+  function handleMouseOut() {
+      removeHighlights();
+      tooltip.transition().duration(500).style("opacity", 0);
+  }
+
+  function handleClick(event, d) {
+      if (d.pdf_link) {
+          window.open(d.pdf_link, "_blank");
+      } else if (!d.id.includes("_")) {
+          alert("Tidak ada link tersedia untuk jurnal ini.");
+      }
+  }
+
+  // Simulation tick function
+  function ticked() {
+      link
+          .attr("x1", d => d.source.x)
+          .attr("y1", d => d.source.y)
+          .attr("x2", d => d.target.x)
+          .attr("y2", d => d.target.y);
+
+      nodeGroup.attr("transform", d => {
+          d.x = Math.max(40, Math.min(width - 40, d.x));
+          d.y = Math.max(40, Math.min(height - 40, d.y));
+          return `translate(${d.x}, ${d.y})`;
+      });
+  }
+
+  // Function to highlight connected nodes and links
+  function highlightConnections(d) {
+      var connectedNodeIds = new Set([d.id]);
+      links.forEach(link => {
+          if (link.source.id === d.id || link.target.id === d.id) {
+              connectedNodeIds.add(link.source.id);
+              connectedNodeIds.add(link.target.id);
+          }
+      });
+
+      nodeGroup.classed("highlighted", n => connectedNodeIds.has(n.id))
+          .classed("dimmed", n => !connectedNodeIds.has(n.id));
+      link.classed("highlighted", l => l.source.id === d.id || l.target.id === d.id);
+  }
+
+  // Function to remove highlights
+  function removeHighlights() {
+      nodeGroup.classed("highlighted", false).classed("dimmed", false);
+      link.classed("highlighted", false);
+  }
+  
+// Start simulation
+simulation.nodes(nodes).on("tick", ticked);
+simulation.force("link").links(links);
+
+// Di bagian script setelah deklarasi nodes
+const showKeyword = document.getElementById('show-keyword');
+const showMethod = document.getElementById('show-method');
+const showGoal = document.getElementById('show-goal');
+
+function updateVisibility() {
+  // Update node visibility
+  d3.selectAll('.node-group').each(function(d) {
+      if (d.id.includes('_keyword')) {
+          d3.select(this).style('display', showKeyword.checked ? 'block' : 'none');
+      } else if (d.id.includes('_method')) {
+          d3.select(this).style('display', showMethod.checked ? 'block' : 'none');
+      } else if (d.id.includes('_goal')) {
+          d3.select(this).style('display', showGoal.checked ? 'block' : 'none');
+      }
+  });
+
+  // Update link visibility
+  d3.selectAll('.links line').each(function(d) {
+      const sourceId = d.source.id || d.source;
+      const targetId = d.target.id || d.target;
+      let shouldShow = true;
+
+      if (d.type === 'method') {
+          shouldShow = showMethod.checked;
+      } else if (d.type === 'goal') {
+          shouldShow = showGoal.checked;
+      }
+
+      d3.select(this).style('display', shouldShow ? 'block' : 'none');
+  });
+}
+var link = svg
+    .append("g")
+    .attr("class", "links")
+    .selectAll("line")
+    .data(links)
+    .enter()
+    .append("line")
+    .attr("class", function(d) {
+        return d.type ? `link-${d.type}` : "link-default";
+    })
+    .attr("stroke-width", function(d) {
+        return d.type ? 2 : 1;
+    })
+    .attr("stroke", function(d) {
+        if (d.type === 'method') return "#1E3E62";
+        if (d.type === 'goal') return "#FF6500";
+        return "#999";
+    })
+    .attr("stroke-dasharray", function(d) {
+        return d.type ? "5,5" : "none";
+    });
+
+// Add event listeners
+showKeyword.addEventListener('change', updateVisibility);
+showMethod.addEventListener('change', updateVisibility);
+showGoal.addEventListener('change', updateVisibility);
+
     </script>
-</body>
+  </body>
 </html>

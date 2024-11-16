@@ -9,6 +9,7 @@ def indexM(request):
     # Ambil keyword, keyword method, dan rentang tahun dari query parameter
     keyword = request.GET.get('keyword', '').lower()
     keyword_method = request.GET.get('keyword_method', '').lower()  # Filter khusus metode
+    keyword_objective = request.GET.get('keyword_objective', '').lower()  # Filter khusus metode
     from_year = request.GET.get('from_year', '').strip()
     to_year = request.GET.get('to_year', '').strip()
 
@@ -53,7 +54,11 @@ def indexM(request):
                 # Tambahan: Filter berdasarkan keyword method khusus di kolom 'Methods'
                 methods_content = row.get('Methods', '').lower()
                 if keyword_method and keyword_method not in methods_content:
-                    continue  # Lewati jurnal ini jika metode tidak cocok
+                    continue  
+                
+                objective_content = row.get('Objective', '').lower()
+                if keyword_objective and keyword_objective not in objective_content:
+                    continue  
 
                 # Filter berdasarkan keyword dan rentang tahun jika diisi
                 if keyword_lower in title_lower or keyword_lower in abstract_combined:
@@ -63,24 +68,44 @@ def indexM(request):
                         pdf_link = row.get('PDF Link', '')
 
                         if relevansi > 0:
-                            journals.append({
+                            journal_node = {
                                 'j': {
                                     'title': row['Title'],
                                     'abstract': abstract_combined,
                                     'author': row['Authors'],
                                     'relevansi': relevansi,
-                                    'pdf_link': pdf_link
+                                    'pdf_link': pdf_link,
+                                    'method': methods_content,
+                                    'goal': objective_content
                                 }
-                            })
+                            }
+                            journals.append(journal_node)
 
-                            # Membuat relasi antar node berdasarkan relevansi lebih dari 1
-                            if relevansi > 1:
-                                for other_journal in journals[:-1]:
-                                    if other_journal['j']['relevansi'] > 1:
-                                        links.append({
-                                            'source': row['Title'],
-                                            'target': other_journal['j']['title']
-                                        })
+                            # Membuat relasi antar node berdasarkan kesamaan Goals dan Methods
+                            for other_journal in journals[:-1]:  # Check against previously added journals
+                                # Cek kesamaan methods
+                                if (methods_content and other_journal['j']['method'] and
+                                    any(method.strip() in other_journal['j']['method'].lower() 
+                                        for method in methods_content.split(','))):
+                                    # Link antar node method yang sama
+                                    links.append({
+                                        'source': f"{row['Title']}_method",
+                                        'target': f"{other_journal['j']['title']}_method",
+                                        'type': 'method'
+                                    })
+
+                                # Cek kesamaan goals/objectives
+                                if (objective_content and other_journal['j']['goal'] and
+                                    any(goal.strip() in other_journal['j']['goal'].lower() 
+                                        for goal in objective_content.split(','))):
+                                    # Link antar node goal yang sama
+                                    links.append({
+                                        'source': f"{row['Title']}_goal",
+                                        'target': f"{other_journal['j']['title']}_goal",
+                                        'type': 'goal'
+                                    })
+                                    
+
 
     except FileNotFoundError:
         return render(request, 'indexM.html', {'error': f'File CSV tidak ditemukan pada path: {csv_path}'})
@@ -96,3 +121,4 @@ def indexM(request):
     }
 
     return render(request, 'indexM.html', context)
+
