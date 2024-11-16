@@ -190,8 +190,8 @@ def scrape_multiple_pages(limit=12):
 
     if all_journal_data:
         df = pd.DataFrame(all_journal_data)
-        df.to_csv('journal_data_filtered.csv', index=False)
-        print("Scraping completed and saved to journal_data_filtered.csv")
+        df.to_csv('journal_data.csv', index=False)
+        print("Scraping completed and saved to journal_data.csv")
     else:
         print("No data scraped.")
 
