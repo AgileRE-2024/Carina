@@ -1,7 +1,7 @@
 // Get initial data from elements
 var data = JSON.parse(document.getElementById("journals-data").textContent);
 var links = JSON.parse(document.getElementById("links-data").textContent);
-var keyword = document.querySelector("input[name='keyword']").value;
+var keyword = "{{ request.GET.keyword }}";
 
 // Set larger dimensions for the visualization
 var width = 1200,
@@ -112,7 +112,7 @@ nodeGroup.append("circle")
     });
 
 // Add wrapped text only to main nodes
-nodeGroup.each(function(d) {
+nodeGroup.each(function (d) {
     if (!d.id.includes("_") || d.id === keyword) {
         var nodeGroup = d3.select(this);
         var title = d.id;
@@ -179,8 +179,8 @@ function handleMouseOver(event, d) {
     tooltip
         .html(
             `<div class="tooltip-title">${d.id.includes("_") ? d.label : d.id}</div>
-            <div class="tooltip-content">${d.content ? d.content.substring(0, 150) + "..." : ""}</div>
-            ${d.author && !d.id.includes("_") ? `<div class="tooltip-author">By: ${d.author}</div>` : ""}`
+    <div class="tooltip-content">${d.content ? d.content.substring(0, 150) + "..." : ""}</div>
+    ${d.author && !d.id.includes("_") ? `<div class="tooltip-author">By: ${d.author}</div>` : ""}`
         )
         .style("left", event.pageX + 10 + "px")
         .style("top", event.pageY - 10 + "px");
@@ -246,7 +246,7 @@ const showGoal = document.getElementById('show-goal');
 
 function updateVisibility() {
     // Update node visibility
-    d3.selectAll('.node-group').each(function(d) {
+    d3.selectAll('.node-group').each(function (d) {
         if (d.id.includes('_keyword')) {
             d3.select(this).style('display', showKeyword.checked ? 'block' : 'none');
         } else if (d.id.includes('_method')) {
@@ -257,7 +257,7 @@ function updateVisibility() {
     });
 
     // Update link visibility
-    d3.selectAll('.links line').each(function(d) {
+    d3.selectAll('.links line').each(function (d) {
         const sourceId = d.source.id || d.source;
         const targetId = d.target.id || d.target;
         let shouldShow = true;
@@ -271,7 +271,6 @@ function updateVisibility() {
         d3.select(this).style('display', shouldShow ? 'block' : 'none');
     });
 }
-
 var link = svg
     .append("g")
     .attr("class", "links")
@@ -279,18 +278,18 @@ var link = svg
     .data(links)
     .enter()
     .append("line")
-    .attr("class", function(d) {
+    .attr("class", function (d) {
         return d.type ? `link-${d.type}` : "link-default";
     })
-    .attr("stroke-width", function(d) {
+    .attr("stroke-width", function (d) {
         return d.type ? 2 : 1;
     })
-    .attr("stroke", function(d) {
+    .attr("stroke", function (d) {
         if (d.type === 'method') return "#1E3E62";
         if (d.type === 'goal') return "#FF6500";
         return "#999";
     })
-    .attr("stroke-dasharray", function(d) {
+    .attr("stroke-dasharray", function (d) {
         return d.type ? "5,5" : "none";
     });
 
@@ -298,3 +297,4 @@ var link = svg
 showKeyword.addEventListener('change', updateVisibility);
 showMethod.addEventListener('change', updateVisibility);
 showGoal.addEventListener('change', updateVisibility);
+
