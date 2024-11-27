@@ -8,8 +8,10 @@ from itertools import chain
 import wikipediaapi
 import random
 
+# Load spaCy NLP model
 nlp = spacy.load("en_core_web_sm")
 
+# Initialize Wikipedia API with user agent
 wiki_wiki = wikipediaapi.Wikipedia(
     language='en',
     user_agent="JISEBI-Scraper/1.0 (https://example.com; contact@example.com)"
@@ -24,8 +26,8 @@ def get_page_content(url, retries=3, timeout=30):
             return response.content
         except requests.exceptions.RequestException as e:
             print(f"Attempt {attempt + 1} failed: {e}")
-            if attempt < retries - 1:  
-                wait_time = 2 ** attempt + random.uniform(0, 1)  
+            if attempt < retries - 1:  # Retry if not the last attempt
+                wait_time = 2 ** attempt + random.uniform(0, 1)  # Exponential backoff with jitter
                 print(f"Retrying in {wait_time:.2f} seconds...")
                 time.sleep(wait_time)
             else:
@@ -39,8 +41,8 @@ def is_term_in_wikipedia(term, retries=3, timeout=10):
             page = wiki_wiki.page(term)
             return page.exists()
         except requests.exceptions.ReadTimeout:
-            if attempt < retries - 1:  
-                wait_time = 2 ** attempt + random.uniform(0, 1) 
+            if attempt < retries - 1:  # Retry if not the last attempt
+                wait_time = 2 ** attempt + random.uniform(0, 1)  # Exponential backoff
                 print(f"Timeout for term '{term}'. Retrying in {wait_time:.2f} seconds...")
                 time.sleep(wait_time)
             else:
@@ -74,23 +76,28 @@ def parse_abstract(abstract_text):
         'Methods': r'(Methods|Approach|Procedure):(.*?)(Results:|Conclusion:|$)',
         'Results': r'(Results|Findings):(.*?)(Conclusion:|$)',
         'Conclusion': r'(Conclusion|Summary):(.*?)(Keywords:|$)',
+        'Keywords': r'(Keywords:)(.*?)($)',  # Added pattern for Keywords section
     }
 
     sections = {}
     for section, pattern in patterns.items():
         match = re.search(pattern, abstract_text, re.DOTALL)
-        sections[section] = match.group(2).strip() if match else 'N/A'
-
-    if sections.get('Background', 'N/A') != 'N/A':
-        sections['Background'] = extract_terms(sections['Background'], pos_filters=['NOUN'], phrase_types=['ADJ', 'NOUN'])
-    if sections.get('Objective', 'N/A') != 'N/A':
-        sections['Objective'] = extract_terms(sections['Objective'], pos_filters=['VERB', 'NOUN'], phrase_types=['ADJ', 'NOUN'])
-    if sections.get('Methods', 'N/A') != 'N/A':
-        sections['Methods'] = extract_terms(sections['Methods'], pos_filters=['VERB', 'NOUN'])
-    if sections.get('Results', 'N/A') != 'N/A':
-        sections['Results'] = extract_terms(sections['Results'], pos_filters=['NOUN'], phrase_types=['ADJ', 'NOUN'])
-    if sections.get('Conclusion', 'N/A') != 'N/A':
-        sections['Conclusion'] = extract_terms(sections['Conclusion'], pos_filters=['VERB', 'NOUN'])
+        raw_text = match.group(2).strip() if match else 'N/A'
+        
+        # Save raw content for Background, Objective, and Methods
+        if section in ['Background', 'Objective', 'Methods']:
+            sections[section] = raw_text
+        else:
+            # Extract terms for Results and Conclusion
+            if section == 'Results' and raw_text != 'N/A':
+                sections['Results'] = extract_terms(raw_text, pos_filters=['NOUN'], phrase_types=['ADJ', 'NOUN'])
+            elif section == 'Conclusion' and raw_text != 'N/A':
+                sections['Conclusion'] = extract_terms(raw_text, pos_filters=['VERB', 'NOUN'])
+            elif section == 'Keywords' and raw_text != 'N/A':
+                # For Keywords, just save them as raw text or process further if needed
+                sections['Keywords'] = raw_text
+            else:
+                sections[section] = raw_text
 
     return sections
 
@@ -130,10 +137,12 @@ def scrape_article_page(url):
         'Methods': abstract_sections['Methods'],
         'Results': abstract_sections['Results'],
         'Conclusion': abstract_sections['Conclusion'],
+        'Keywords': abstract_sections['Keywords'],  # Added Keywords field here
         'Authors': authors,
         'Year': year,
         'PDF Link': pdf_link
     }
+
 
 def scrape_journal_page(url):
     """Scrape articles from a journal issue page."""
