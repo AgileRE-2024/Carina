@@ -31,50 +31,68 @@
     </div>
 
     <div class="search-container">
-      <form action="/mindmap/" method="GET">
-        <label for="from-year">From Year:</label>
-        <input
-          type="number"
-          name="from_year"
-          id="from-year"
-          placeholder="All"
-          value="{{ request.GET.from_year }}"
-          min="1900"
-          max="2100"
-        />
-
-        <label for="to-year">To Year:</label>
-        <input
-          type="number"
-          name="to_year"
-          id="to-year"
-          placeholder="All"
-          value="{{ request.GET.to_year }}"
-          min="1900"
-          max="2100"
-        />
-
-        {% csrf_token %}
-        <input
-          type="text"
-          name="keyword"
-          placeholder="Masukkan keyword pencarian..."
-          value="{{ request.GET.keyword }}"
-        />
-        <input
-          type="text"
-          name="keyword_method"
-          placeholder="Masukkan metode"
-          value="{{ request.GET.keyword_method }}"
-        />
-        <input
-          type="text"
-          name="keyword_objective"
-          placeholder="Masukkan objective"
-          value="{{ request.GET.keyword_objective }}"
-        />
-
-        <button type="submit">Cari</button>
+      <form action="/mindmap/" method="GET" class="form-container">
+        <div class="row">
+          <div class="column">
+            <div class="form-group">
+              <label for="from-year">From Year:</label>
+              <input
+                type="number"
+                name="from_year"
+                id="from-year"
+                placeholder="All"
+                value="{{ request.GET.from_year }}"
+                min="1900"
+                max="2100"
+              />
+            </div>
+            <div class="form-group">
+              <label for="to-year">To Year:</label>
+              <input
+                type="number"
+                name="to_year"
+                id="to-year"
+                placeholder="All"
+                value="{{ request.GET.to_year }}"
+                min="1900"
+                max="2100"
+              />
+            </div>
+          </div>
+          <div class="column wide">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="keyword">Keyword:</label>
+              <input
+                type="text"
+                name="keyword"
+                placeholder="Masukkan keyword pencarian"
+                value="{{ request.GET.keyword }}"
+              />
+            </div>
+            <div class="form-group">
+              <label for="metode">Metode:</label>
+              <input
+                type="text"
+                name="keyword_method"
+                placeholder="Masukkan metode"
+                value="{{ request.GET.keyword_method }}"
+              />
+            </div>
+            <div class="form-group">
+              <label for="objektif">Objektif:</label>
+              <input
+                type="text"
+                name="keyword_objective"
+                placeholder="Masukkan objective"
+                value="{{ request.GET.keyword_objective }}"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="button-container">
+          <button type="submit">Cari</button>
+        </div>
         {% if error %}
         <p class="error-text">{{ error }}</p>
         {% endif %}
