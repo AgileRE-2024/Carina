@@ -1,230 +1,251 @@
 /* Global Styles */
 :root {
-    --primary-color: #0B192C;
-    --secondary-color: #1E3E62;
-    --accent-color: #FF6500;
-    --text-color: #333;
-    --background-light: #FCFAEE;
-    --white: #FFFFFF;
-    --error-color: #dc3545;
+  --primary-color: #0b192c;
+  --secondary-color: #1e3e62;
+  --accent-color: #ff6500;
+  --text-color: #333;
+  --background-light: #fcfaee;
+  --white: #ffffff;
+  --error-color: #dc3545;
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: "Poppins", sans-serif;
-    background: linear-gradient(135deg, var(--background-light) 0%, var(--white) 100%);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2rem;
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(
+    135deg,
+    var(--background-light) 0%,
+    var(--white) 100%
+  );
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
 }
 
 /* Typography */
 .poppins-extralight {
-    font-family: "Poppins", sans-serif;
-    font-weight: 200;
+  font-family: "Poppins", sans-serif;
+  font-weight: 200;
 }
 
 .mochiy-pop-one-regular {
-    font-family: "Mochiy Pop One", sans-serif;
-    font-weight: 400;
+  font-family: "Mochiy Pop One", sans-serif;
+  font-weight: 400;
 }
 
 /* Header Styles */
 .header-container {
-    text-align: center;
-    margin-bottom: 3rem;
-    width: 100%;
+  text-align: center;
+  margin-bottom: 3rem;
+  width: 100%;
 }
 
 h1 {
-    font-family: "Mochiy Pop One", sans-serif;
-    font-size: 4rem;
-    color: var(--primary-color);
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-    letter-spacing: 2px;
-    animation: fadeIn 1s ease-in;
+  font-family: "Mochiy Pop One", sans-serif;
+  font-size: 4rem;
+  color: var(--primary-color);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  letter-spacing: 2px;
+  animation: fadeIn 1s ease-in;
 }
 
-/* Search Container Styles */
 .search-container {
-    background: var(--white);
-    padding: 2rem;
-    border-radius: 15px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  margin: 20px;
 }
 
-.search-container form {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
-    align-items: center;
+.form-container {
+  width: 100%;
+  max-width: 2000px;
 }
 
-/* Input Styles */
-.search-container label {
-    font-weight: 500;
-    color: var(--text-color);
-    margin-right: 0.5rem;
+.row {
+  display: flex;
+  gap: 20px;
+  width: 430px;
 }
 
-.search-container input {
-    border: 2px solid #e1e1e1;
-    border-radius: 8px;
-    padding: 0.8rem 1rem;
-    transition: all 0.3s ease;
+.column {
+  flex: 40px;
+  background: var(--white);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  border-radius: 20px;
+  justify-content: center;
+  align-content: center;
 }
 
-.search-container input[type="number"] {
-    width: 100px;
+.column.wide {
+  flex: 210px;
+  background: var(--white);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  border-radius: 20px;
+  justify-content: center;
+  align-content: center;
 }
 
-.search-container input[type="text"] {
-    width: 250px;
+.form-group {
+  margin-bottom: 15px;
 }
 
-.search-container input:focus {
-    border-color: var(--secondary-color);
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(30, 62, 98, 0.1);
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
 }
 
-.search-container input::placeholder {
-    color: #999;
-    font-size: 0.9rem;
+input[name="keyword"] {
+  background-color: #f9ecac; /* Warna latar kuning lembut */
+  border: 1px solid #bd9834; /* Warna border kuning lebih gelap */
+  border-radius: 4px;
+  padding: 8px;
+  color: #333; /* Warna teks */
 }
 
-/* Button Styles */
-.search-container button {
-    background-color: var(--primary-color);
-    color: var(--white);
-    border: none;
-    border-radius: 8px;
-    padding: 0.8rem 2rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
+/* Tambahkan efek saat kotak input di-focus */
+input[name="keyword"]:focus {
+  outline: none;
+  border: 1px solid #8c6c15; /* Warna border lebih gelap saat aktif */
+  box-shadow: 0 0 5px #8c6c15; /* Glow kuning */
 }
 
-.search-container button:hover {
-    background-color: var(--secondary-color);
-    transform: translateY(-2px);
+input {
+  width: 100%; /* Kotak input mengambil seluruh lebar kolom */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
-/* Error Message */
+input:focus {
+  border-color: var(--primary-blue);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(30, 62, 98, 0.1);
+}
+
+/* Tambahan styling untuk memperbesar lebar kotak input tertentu */
+input[type="text"] {
+  width: 100%;
+}
+
+.button-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #1f3b59;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  width: 150px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
 .error-text {
-    font-family: "Poppins", sans-serif;
-    color: var(--error-red);
-    background-color: rgba(255, 0, 0, 0.1);
-    /* Tambahkan latar belakang transparan */
-    border: 1px solid var(--error-red);
-    /* Tambahkan border */
-    padding: 0.8rem;
-    border-radius: 8px;
-    width: fit-content;
-    margin: 1rem auto;
-    /* Centered */
-    font-size: 1rem;
-    /* Sedikit lebih besar agar lebih terlihat */
+  color: red;
+  margin-top: 10px;
 }
-
 
 /* Mindmap Styles */
 .mindmap-container {
-    margin-top: 3rem;
-    width: 100%;
-    max-width: 1200px;
-    background: var(--white);
-    border-radius: 15px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+  margin-top: 3rem;
+  width: 100%;
+  max-width: 1200px;
+  background: var(--white);
+  border-radius: 15px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
 .mindmap-header {
-    background: var(--primary-color);
-    color: var(--white);
-    padding: 1rem;
-    text-align: center;
-    font-size: 1.5rem;
-    font-weight: 600;
+  background: var(--primary-color);
+  color: var(--white);
+  padding: 1rem;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
 #mindmap {
-    padding: 2rem;
-    min-height: 600px;
+  padding: 2rem;
+  min-height: 600px;
 }
 
 /* D3.js Mindmap Specific Styles */
 .nodes circle {
-    transition: all 0.3s ease;
-    cursor: pointer;
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .nodes circle:hover {
-    fill: var(--accent-color);
-    transform: scale(1.1);
+  fill: var(--accent-color);
+  transform: scale(1.1);
 }
 
 .links line {
-    stroke: #999;
-    stroke-opacity: 0.6;
-    stroke-width: 2;
+  stroke: #999;
+  stroke-opacity: 0.6;
+  stroke-width: 2;
 }
 
 .labels text {
-    font-family: "Poppins", sans-serif;
-    font-size: 12px;
-    transition: all 0.3s ease;
-    cursor: pointer;
+  font-family: "Poppins", sans-serif;
+  font-size: 12px;
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .labels text:hover {
-    fill: var(--accent-color);
-    font-weight: 600;
+  fill: var(--accent-color);
+  font-weight: 600;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    h1 {
-        font-size: 3rem;
-    }
+  h1 {
+    font-size: 3rem;
+  }
 
-    .search-container {
-        padding: 1.5rem;
-    }
+  .search-container {
+    padding: 1.5rem;
+  }
 
-    .search-container input[type="text"] {
-        width: 100%;
-    }
+  .search-container input[type="text"] {
+    width: 100%;
+  }
 
-    .search-container form {
-        flex-direction: column;
-    }
+  .search-container form {
+    flex-direction: column;
+  }
 
-    .search-container button {
-        width: 100%;
-    }
+  .search-container button {
+    width: 100%;
+  }
 }
 
 /* Animations */
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
