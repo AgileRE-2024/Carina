@@ -8,10 +8,8 @@ from itertools import chain
 import wikipediaapi
 import random
 
-# Load spaCy NLP model
 nlp = spacy.load("en_core_web_sm")
 
-# Initialize Wikipedia API with user agent
 wiki_wiki = wikipediaapi.Wikipedia(
     language='en',
     user_agent="JISEBI-Scraper/1.0 (https://example.com; contact@example.com)"
@@ -26,8 +24,8 @@ def get_page_content(url, retries=3, timeout=30):
             return response.content
         except requests.exceptions.RequestException as e:
             print(f"Attempt {attempt + 1} failed: {e}")
-            if attempt < retries - 1:  # Retry if not the last attempt
-                wait_time = 2 ** attempt + random.uniform(0, 1)  # Exponential backoff with jitter
+            if attempt < retries - 1:  
+                wait_time = 2 ** attempt + random.uniform(0, 1)  
                 print(f"Retrying in {wait_time:.2f} seconds...")
                 time.sleep(wait_time)
             else:
@@ -41,8 +39,8 @@ def is_term_in_wikipedia(term, retries=3, timeout=10):
             page = wiki_wiki.page(term)
             return page.exists()
         except requests.exceptions.ReadTimeout:
-            if attempt < retries - 1:  # Retry if not the last attempt
-                wait_time = 2 ** attempt + random.uniform(0, 1)  # Exponential backoff
+            if attempt < retries - 1:  
+                wait_time = 2 ** attempt + random.uniform(0, 1) 
                 print(f"Timeout for term '{term}'. Retrying in {wait_time:.2f} seconds...")
                 time.sleep(wait_time)
             else:
@@ -76,7 +74,7 @@ def parse_abstract(abstract_text):
         'Methods': r'(Methods|Approach|Procedure):(.*?)(Results:|Conclusion:|$)',
         'Results': r'(Results|Findings):(.*?)(Conclusion:|$)',
         'Conclusion': r'(Conclusion|Summary):(.*?)(Keywords:|$)',
-        'Keywords': r'(Keywords:)(.*?)($)',  # Added pattern for Keywords section
+        'Keywords': r'(Keywords:)(.*?)($)',  
     }
 
     sections = {}
@@ -84,22 +82,27 @@ def parse_abstract(abstract_text):
         match = re.search(pattern, abstract_text, re.DOTALL)
         raw_text = match.group(2).strip() if match else 'N/A'
         
-        # Save raw content for Background, Objective, and Methods
         if section in ['Background', 'Objective', 'Methods']:
             sections[section] = raw_text
         else:
-            # Extract terms for Results and Conclusion
             if section == 'Results' and raw_text != 'N/A':
                 sections['Results'] = extract_terms(raw_text, pos_filters=['NOUN'], phrase_types=['ADJ', 'NOUN'])
             elif section == 'Conclusion' and raw_text != 'N/A':
                 sections['Conclusion'] = extract_terms(raw_text, pos_filters=['VERB', 'NOUN'])
             elif section == 'Keywords' and raw_text != 'N/A':
-                # For Keywords, just save them as raw text or process further if needed
                 sections['Keywords'] = raw_text
             else:
                 sections[section] = raw_text
 
     return sections
+
+def match_keywords_to_section(keywords, section_text):
+    """Check if any keywords appear in a section of text."""
+    matched_keywords = []
+    for keyword in keywords:
+        if keyword.lower() in section_text.lower():
+            matched_keywords.append(keyword)
+    return matched_keywords
 
 def scrape_article_page(url):
     """Scrape information from an individual article page."""
@@ -131,13 +134,19 @@ def scrape_article_page(url):
         pdf_url = pdf_tag['href']
         pdf_link = pdf_url if pdf_url.startswith('http') else 'https://e-journal.unair.ac.id' + pdf_url
 
+    keywords = abstract_sections['Keywords'].split(', ') if abstract_sections['Keywords'] != 'N/A' else []
+
+    abstract_sections['Background'] = match_keywords_to_section(keywords, abstract_sections['Background'])
+    abstract_sections['Objective'] = match_keywords_to_section(keywords, abstract_sections['Objective'])
+    abstract_sections['Methods'] = match_keywords_to_section(keywords, abstract_sections['Methods'])
+
     return {
         'Background': abstract_sections['Background'],
         'Objective': abstract_sections['Objective'],
         'Methods': abstract_sections['Methods'],
         'Results': abstract_sections['Results'],
         'Conclusion': abstract_sections['Conclusion'],
-        'Keywords': abstract_sections['Keywords'],  # Added Keywords field here
+        'Keywords': abstract_sections['Keywords'], 
         'Authors': authors,
         'Year': year,
         'PDF Link': pdf_link
@@ -200,9 +209,8 @@ def scrape_multiple_pages(limit=12):
     if all_journal_data:
         df = pd.DataFrame(all_journal_data)
         df.to_csv('journal_data.csv', index=False)
-        print("Scraping completed and saved to journal_data.csv")
+        print("Scraping complete. Data saved to 'journal_data.csv'.")
     else:
-        print("No data scraped.")
+        print("No data found to scrape.")
 
-if __name__ == '__main__':
-    scrape_multiple_pages(limit=12)
+scrape_multiple_pages()
