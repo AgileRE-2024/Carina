@@ -18,8 +18,8 @@ Before you begin, ensure you have the following installed:
 
 ## Installation Steps
 1. Clone the Repository
-- specify the folder where to clone.
-- right click inside the folder, and select "Open Git Bash here".
+- Specify the folder where to clone.
+- Right click inside the folder, and select "Open Git Bash here".
 - Open a terminal or command prompt.
 - Run the following command to clone the repository:
     ```sh
