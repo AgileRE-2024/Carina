@@ -33,7 +33,8 @@ def indexM(request):
 
     try:
         with open(csv_path, newline='', encoding='utf-8') as csvfile:
-            reader = csv.DictReader(csvfile)
+            reader = list(csv.DictReader(csvfile))  # Ubah reader menjadi list agar dapat digunakan di luar blok `with`
+
             for row in reader:
                 title_lower = row['Title'].lower()
                 keyword_lower = keyword.lower()
@@ -104,13 +105,15 @@ def indexM(request):
                                         'target': f"{other_journal['j']['title']}_goal",
                                         'type': 'goal'
                                     })
-                                    
-
 
     except FileNotFoundError:
         return render(request, 'indexM.html', {'error': f'File CSV tidak ditemukan pada path: {csv_path}'})
 
     if not journals:
+        if keyword_method and not any(keyword_method in row.get('Methods', '').lower() for row in reader):
+            return render(request, 'indexM.html', {'error': f'Tidak ditemukan jurnal dengan metode "{keyword_method}" dalam rentang tahun yang ditentukan.'})
+        if keyword_objective and not any(keyword_objective in row.get('Objective', '').lower() for row in reader):
+            return render(request, 'indexM.html', {'error': f'Tidak ditemukan jurnal dengan tujuan "{keyword_objective}" dalam rentang tahun yang ditentukan.'})
         return render(request, 'indexM.html', {'error': f'Tidak ditemukan jurnal untuk "{keyword}" dalam rentang tahun yang ditentukan.'})
 
     # Konversi data journals ke JSON dan kirimkan ke template
